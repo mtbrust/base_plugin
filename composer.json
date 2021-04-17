@@ -1,0 +1,12 @@
+{
+    "name": "brust/base_plugin",
+    "authors": [
+        {
+            "name": "Mateus Brust",
+            "email": "mtbrust@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.3"
+    }
+}

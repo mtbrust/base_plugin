@@ -11,6 +11,11 @@ class Plugin
   public static string $plugin_name;
 
   /**
+   * Nome da api
+   */
+  public static string $plugin_slug;
+
+  /**
    * Prefixo da tabela
    */
   public static string $prefix_name;
@@ -36,7 +41,8 @@ class Plugin
   {
     // Define constantes do plugin.
     Self::$plugin_name = $plugin_name;
-    Self::$prefix_name = str_replace(' ', '_', strtolower($plugin_name)). '_';
+    Self::$plugin_slug  = str_replace(' ', '_', strtolower($plugin_name));
+    Self::$prefix_name = Self::$plugin_slug . '_';
     Self::$charset     = $charset;
 
     // Define os caminhos do plugin.
@@ -44,7 +50,6 @@ class Plugin
     Self::$path = str_replace('\\', '/', $path);
     Self::$url  = $url;
     
-
   }
 
   /**
@@ -56,6 +61,15 @@ class Plugin
   {
     // Carrega as dependências do plugin.
     $this->dependences();
+
+    // Inicia os Menus.
+    Menu::start();
+
+    // Inicia os ShortCodes.
+    ShortCode::start();
+
+    // Inicia as APIs.
+    Api::start();
 
   }
 
@@ -72,7 +86,11 @@ class Plugin
     // Controllers
     require_once Self::$path . 'c/plugin/Activate.php';
     require_once Self::$path . 'c/plugin/Desactivate.php';
-
+    require_once Self::$path . 'c/menus/Menu.php';
+    require_once Self::$path . 'c/shortcodes/ShortCode.php';
+    require_once Self::$path . 'c/apis/Api.php';
+    require_once Self::$path . 'c/Render.php';
+    
     // Models
     require_once Self::$path . 'm/bd/Bd.php';
     require_once Self::$path . 'm/bd/bdCreate.php';

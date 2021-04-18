@@ -1,0 +1,91 @@
+/* ITEM COLUNA EM 2 COLUNAS MOBILE*/
+/* ************************************************************* */
+/* Deixa o item coluna em 2 colunas no mobile. com a classe mobile2 */
+@media only screen and (max-width: 479px) {
+	.column.mcb-column.one-fourth.column_column.mobile2{
+		width: 48% !important;
+		clear: none;
+		margin: 1% !important;
+	}
+}
+
+
+
+
+
+/* WOOCOMMERCE 2 COLUNAS LOJA MOBILE COM MARGIN*/
+/* ************************************************************* */
+/* Deixa a loja exibir 2 colunas no mobile. */
+@media only screen and (max-width: 479px){
+	.woocommerce ul.products.col-4 li.product, .woocommerce .related ul.products li.product, .woocommerce.columns-3 ul.products li.product, .woocommerce.columns-2 ul.products li.product {
+		width: 46% !important;
+		/* padding: 5px; */
+		/* border: solid 5px transparent; */
+		/* box-sizing: border-box; */
+		margin: 10px 2% !important;
+	}
+}
+
+
+
+
+/* ALERT */
+/* ************************************************************* */
+/* Deixa o alert pequeno. Ocupa menos espaço. */
+.alert {
+  margin-bottom: 15px;
+  padding: 5px 30px 5px 50px;
+}
+.alert .alert_icon {
+  width: 35px;
+  height: 35px;
+  font-size: 25px;
+  line-height: 35px;
+  left: 5px;
+  top: 5px;
+}
+.alert a.close {
+  right: 5px;
+  top: 6px;
+}
+
+
+
+/* ESTILO INDICADOR NUMÉRICO DESV MEMBROS */
+/* ************************************************************* */
+/* Diminui indicador para ser usado em 2 colunas no mobile. */
+.quick_fact .number-wrapper {
+  font-size: 50px;
+  line-height: 50px;
+}
+.quick_fact {
+  padding: 5px;
+  background-color: #efefef6b;
+  border-radius: 10px;
+  box-shadow: inset #000 0px 0px 10px -10px;
+  margin-top: 20px;
+}
+.animate-math span.number {
+  font-size: 50px;
+}
+.progress_bars .bars_list li h6 {
+  margin-bottom: 0px;
+  position: relative;
+  padding-right: 40px;
+  text-align: left;
+}
+.desc.quick{
+  line-height: 12px;
+  font-size: 10px;
+  height: 32px;
+}
+
+
+
+
+
+/* BUTTON */
+a.button-mini {
+  padding: 0px 5px;
+  margin: 0;
+}

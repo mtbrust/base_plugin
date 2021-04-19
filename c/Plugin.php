@@ -62,7 +62,11 @@ class Plugin
     // Carrega as dependências do plugin.
     $this->dependences();
 
-    // Inicia os Menus.
+    // Carrega os scripts
+    ScriptsAdmin::start();
+    // ScriptsPublic::start();
+
+    // Inicia os Menus admin.
     Menu::start();
 
     // Inicia os ShortCodes.
@@ -86,10 +90,12 @@ class Plugin
     // Controllers
     require_once Self::$path . 'c/plugin/Activate.php';
     require_once Self::$path . 'c/plugin/Desactivate.php';
+    require_once Self::$path . 'c/plugin/ScriptsAdmin.php';
+    require_once Self::$path . 'c/plugin/ScriptsPublic.php';
+    require_once Self::$path . 'c/plugin/Render.php';
     require_once Self::$path . 'c/menus/Menu.php';
     require_once Self::$path . 'c/shortcodes/ShortCode.php';
     require_once Self::$path . 'c/apis/Api.php';
-    require_once Self::$path . 'c/Render.php';
     
     // Models
     require_once Self::$path . 'm/bd/Bd.php';

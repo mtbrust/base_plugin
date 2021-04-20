@@ -38,11 +38,13 @@ $paramsPage = array(
   'plugin_slug' => '['.Plugin::$plugin_slug.'_modelo]',   // Nome Slug do Plugin.
 );
 
+
+// Renderiza páigna com template.
 echo Render::html($paramsSecurity, $paramsTemplate, $paramsTemplateObjs, $paramsPage, 'shortcodes/modelo');
 
 
+// Renderiza objeto avulso.
 echo '<hr>';
-
+echo 'Obj avulso:<br>';
 echo Render::obj('quadrado', ['nome' => 'Mateus']);
-
 echo '<hr>';

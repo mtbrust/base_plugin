@@ -27,7 +27,7 @@ $paramsTemplate = array(
 // Objetos para serem inseridos dentro de partes do template.
 // O Processamento realiza a montagem. Algum template tem que conter um bloco para Obj ser incluido.
 $paramsTemplateObjs = array(
-  'quadrado'          => 'quadrado',   // Carrega HTML do objeto e coloca no lugar indicado do corpo ou template.
+  'quadrado'          => 'modelo/quadrado',   // Carrega HTML do objeto e coloca no lugar indicado do corpo ou template.
 );
 
 // Valores para serem inseridos no corpo da página.

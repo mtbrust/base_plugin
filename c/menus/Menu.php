@@ -93,7 +93,7 @@ class Menu
         'manage_options',
         Plugin::$plugin_slug.'_'.Self::$submenu,
         function () {
-          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, Self::$submenu);
+          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, 'menus/'.Self::$submenu);
         }
       );
     });
@@ -147,7 +147,7 @@ class Menu
         Plugin::$plugin_slug,
         function () {
 
-          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, 'main');
+          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, 'menus/main');
           // require_once Plugin::$path . 'v/templates/cabecalho.php';
           // require_once Plugin::$path . 'v/pages/view-membros.php';
           // require_once Plugin::$path . 'v/templates/rodape.php';

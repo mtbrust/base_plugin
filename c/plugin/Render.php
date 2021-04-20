@@ -26,9 +26,17 @@ class Render
       $paramsTemplateTmp[$key] = file_get_contents($file);
     }
 
-    // Carrega o menu.
+    // Prepara objs
+    foreach ($paramsTemplateObjs as $key => $value) {
+      if (file_exists(Plugin::$path . 'v/templates/objs/' . $value . '.html'))
+        $paramsTemplateObjs[$key] = Self::obj($value, $paramsPage);
+      else
+        $paramsTemplateObjs[$key] = "Objeto não encontrado.";
+    }
+
+    // Carrega o menu admin.
     if ($pageName) {
-      $path_view = Plugin::$path . 'v/menus/' . $pageName . '.html';
+      $path_view = Plugin::$path . 'v/' . $pageName . '.html';
       if (file_exists($path_view))
         $paramsTemplateTmp['corpo'] = file_get_contents($path_view);
       else
@@ -57,6 +65,16 @@ class Render
     $twig   = new \Twig\Environment($loader);
 
     // Após carregar os templates HTML, e passar os parmâmetros, desenha página na tela.
-    echo $twig->render('base', array_merge($paramsPage));
+    return $twig->render('base', array_merge($paramsPage, $paramsTemplateObjs));
+  }
+
+  public static function obj($obj, $params)
+  {
+    // Sequência de prioridade. Arquivos físicos depois Virtuais.
+    $loader = new \Twig\Loader\FilesystemLoader(Plugin::$path . 'v/templates/objs');
+    $twig   = new \Twig\Environment($loader);
+
+    // Após carregar os templates HTML, e passar os parmâmetros, desenha página na tela.
+    return $twig->render($obj . '.html', array_merge($params));
   }
 }

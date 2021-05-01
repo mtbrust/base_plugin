@@ -1,18 +1,14 @@
 <?php
 
+namespace NameSpaceBasePlugin;
+
 /**
  * Classe responsável pelo menu em admin.
  */
 class Menu
 {
   // Variáveis de ponte.
-  private static array $paramsSecurity;
-  private static array $paramsTemplate;
-  private static array $paramsTemplateObjs;
-  private static array $paramsPage;
-  private static string $submenu;
   private static string $icon;
-
 
 
   /**
@@ -25,12 +21,14 @@ class Menu
     // Icone dentro de m/assets/img/
     Self::$icon = 'page_desv.png';
 
-    // Menu principal
+    // Cria Menu principal
     Self::mainMenu();
 
-    // Submenus.
-    Self::subMenu('Modelo');
+    // Cria Submenu Modelo. (v/menus/modelo_pagina.html).
+    Self::subMenu('Modelo Página');
 
+    // Cria Submenu Name Menu. v/menus/name_menu.html
+    Self::subMenu('Name Menu');
   }
 
 
@@ -40,21 +38,24 @@ class Menu
    *
    * @return void
    */
-  public static function subMenu($submenu_nome, $paramsSecurity = null, $paramsTemplate = null, $paramsTemplateObjs = null, $paramsPage = null)
+  public static function subMenu($nomeSubmenu, $paramsSecurity = null, $paramsTemplate = null, $paramsPage = null)
   {
-    Self::$submenu = $submenu_nome;
+    // Guarda o nome em variável statica.
+    $submenuSlug = str_replace(' ', '_', strtolower(Self::tirarAcentos($nomeSubmenu)));
 
-    if ($paramsSecurity) {
+
+    // Não foi implementado ainda.
+    if (!$paramsSecurity) {
       // Valores default de $paramsSecurity.
-      Self::$paramsSecurity = array(
+      $paramsSecurity = array(
         'session'    => true,   // Página guarda sessão.
         'permission' => 0,      // Nível de acesso a página. 0 a 100.
       );
     }
 
-    if ($paramsTemplate) {
+    if (!$paramsTemplate) {
       // Valores default de $paramsTemplate a partir da pasta template.
-      Self::$paramsTemplate = array(
+      $paramsTemplate = array(
         'html'        => 'default',   // Template HTML
         'top'         => 'default',   // Topo da página.
         'header'      => 'default',   // Menu da página.
@@ -63,37 +64,25 @@ class Menu
       );
     }
 
-    if ($paramsTemplateObjs) {
-      // Objetos para serem inseridos dentro de partes do template.
-      // O Processamento realiza a montagem. Algum template tem que conter um bloco para Obj ser incluido.
-      Self::$paramsTemplateObjs = array(
-        'objeto_apelido'          => 'pasta/arquivo.php',   // Carrega HTML do objeto e coloca no lugar indicado do corpo ou template.
-      );
-    }
-
-    if ($paramsPage) {
+    if (!$paramsPage) {
       // Valores para serem inseridos no corpo da página.
       // Exemplo: 'p_nome' => 'Mateus',
       // Exemplo uso view: <p><b>Nome: </b> {{p_nome}}</p>
-      Self::$paramsPage = array(
+      $paramsPage = array(
         'nome'              => 'Mateus',            // Exemplo
       );
     }
 
-
-
-    // Cria o submenu.
-    add_action('admin_menu', function () {
-      $submenu = Self::$submenu;
-      Self::$submenu = str_replace(' ', '_', strtolower(Self::$submenu));
+    // Adiciona o menu.
+    add_action('admin_menu', function () use ($nomeSubmenu, $submenuSlug, $paramsSecurity, $paramsTemplate, $paramsPage) {
       add_submenu_page(
         Plugin::$plugin_slug,
-        $submenu,
-        $submenu,
+        $nomeSubmenu,
+        $nomeSubmenu,
         'manage_options',
-        Plugin::$plugin_slug.'_'.Self::$submenu,
-        function () {
-          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, 'menus/'.Self::$submenu);
+        Plugin::$plugin_slug . '_' . $submenuSlug,
+        function () use ($paramsSecurity, $submenuSlug, $paramsTemplate, $paramsPage) {
+          echo Render::html($paramsSecurity, $paramsTemplate, $paramsPage, 'menus/' . $submenuSlug);
         }
       );
     });
@@ -106,55 +95,60 @@ class Menu
    *
    * @return void
    */
-  public static function mainMenu()
+  public static function mainMenu($paramsSecurity = null, $paramsTemplate = null, $paramsPage = null)
   {
 
-    // Valores default de $paramsSecurity.
-    Self::$paramsSecurity = array(
-      'session'    => true,   // Página guarda sessão.
-      'permission' => 0,      // Nível de acesso a página. 0 a 100.
-    );
+    // Não foi implementado ainda.
+    if (!$paramsSecurity) {
+      // Valores default de $paramsSecurity.
+      $paramsSecurity = array(
+        'session'    => true,   // Página guarda sessão.
+        'permission' => 0,      // Nível de acesso a página. 0 a 100.
+      );
+    }
 
-    // Valores default de $paramsTemplate a partir da pasta template.
-    Self::$paramsTemplate = array(
-      'html'        => 'default',   // Template HTML
-      'top'         => 'default',   // Topo da página.
-      'header'      => 'default',   // Menu da página.
-      'footer'      => 'default',   // footer da página.
-      'bottom'      => 'default',   // Fim da página.
-    );
+    if (!$paramsTemplate) {
+      // Valores default de $paramsTemplate a partir da pasta template.
+      $paramsTemplate = array(
+        'html'        => 'default',   // Template HTML
+        'top'         => 'default',   // Topo da página.
+        'header'      => 'default',   // Menu da página.
+        'footer'      => 'default',   // footer da página.
+        'bottom'      => 'default',   // Fim da página.
+      );
+    }
 
-    // Objetos para serem inseridos dentro de partes do template.
-    // O Processamento realiza a montagem. Algum template tem que conter um bloco para Obj ser incluido.
-    Self::$paramsTemplateObjs = array(
-      'objeto_apelido'          => 'pasta/arquivo.php',   // Carrega HTML do objeto e coloca no lugar indicado do corpo ou template.
-    );
-
-    // Valores para serem inseridos no corpo da página.
-    // Exemplo: 'p_nome' => 'Mateus',
-    // Exemplo uso view: <p><b>Nome: </b> {{p_nome}}</p>
-    Self::$paramsPage = array(
-      'nome'              => 'Mateus',            // Exemplo
-    );
+    if (!$paramsPage) {
+      // Valores para serem inseridos no corpo da página.
+      // Exemplo: 'p_nome' => 'Mateus',
+      // Exemplo uso view: <p><b>Nome: </b> {{p_nome}}</p>
+      $paramsPage = array(
+        'nome'              => 'Mateus',            // Exemplo
+      );
+    }
 
 
-    add_action('admin_menu', function () {
+    add_action('admin_menu', function () use ($paramsSecurity, $paramsTemplate, $paramsPage) {
       // Criação do menu.
       add_menu_page(
         Plugin::$plugin_name,
         Plugin::$plugin_name,
         'manage_options',
         Plugin::$plugin_slug,
-        function () {
-
-          Render::html(Self::$paramsSecurity, Self::$paramsTemplate, Self::$paramsTemplateObjs, Self::$paramsPage, 'menus/main');
-          // require_once Plugin::$path . 'v/templates/cabecalho.php';
-          // require_once Plugin::$path . 'v/pages/view-membros.php';
-          // require_once Plugin::$path . 'v/templates/rodape.php';
+        function () use ($paramsSecurity, $paramsTemplate, $paramsPage) {
+          echo Render::html($paramsSecurity, $paramsTemplate, $paramsPage, 'menus/main');
         },
         Plugin::$url . 'm/assets/img/' . Self::$icon,
         5
       );
     });
   }
+
+
+  // Retira acentos
+  private static function tirarAcentos($string)
+  {
+    return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"), explode(" ", "a A e E i I o O u U n N"), $string);
+  }
+
 }

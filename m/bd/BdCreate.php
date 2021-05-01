@@ -1,5 +1,7 @@
 <?php
 
+namespace NameSpaceBasePlugin;
+
 /**
  * Controle geral do plugin
  */

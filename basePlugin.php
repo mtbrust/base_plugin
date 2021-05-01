@@ -32,7 +32,9 @@ global $wpdb;
  * Carrega o motor do plugin e inicia.
  */
 require_once $desv_path . 'c/Plugin.php';
-$plugin = new Plugin($desv_plugin_name, $desv_bd_charset, $desv_file, $desv_path, $desv_url);
+
+
+$plugin = new NameSpaceBasePlugin\Plugin($desv_plugin_name, $desv_bd_charset, $desv_file, $desv_path, $desv_url);
 $plugin->start();
 
 

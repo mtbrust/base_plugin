@@ -1,5 +1,7 @@
 <?php
 
+namespace NameSpaceBasePlugin;
+
 /**
  * Classe responsável por juntar os blocos de template colocar os parâmetros e renderizar.
  */
@@ -16,7 +18,7 @@ class Render
    * @param array $paramsPage
    * @return void
    */
-  public static function html($paramsSecurity, $paramsTemplate, $paramsTemplateObjs, $paramsPage, $pageName = null)
+  public static function html($paramsSecurity, $paramsTemplate, $paramsPage, $pageName = null)
   {
 
     // Carrega os arquivos no parâmetro.
@@ -24,14 +26,6 @@ class Render
     foreach ($paramsTemplate as $key => $value) {
       $file = Plugin::$path . 'v/templates/' . $key . '/' . $value . '.html';
       $paramsTemplateTmp[$key] = file_get_contents($file);
-    }
-
-    // Prepara objs
-    foreach ($paramsTemplateObjs as $key => $value) {
-      if (file_exists(Plugin::$path . 'v/templates/objs/' . $value . '.html'))
-        $paramsTemplateObjs[$key] = Self::obj($value, $paramsPage);
-      else
-        $paramsTemplateObjs[$key] = "Objeto não encontrado.";
     }
 
     // Carrega o menu admin.
@@ -65,7 +59,7 @@ class Render
     $twig   = new \Twig\Environment($loader);
 
     // Após carregar os templates HTML, e passar os parmâmetros, desenha página na tela.
-    return $twig->render('base', array_merge($paramsPage, $paramsTemplateObjs));
+    return $twig->render('base', array_merge($paramsPage));
   }
 
   public static function obj($obj, $params)

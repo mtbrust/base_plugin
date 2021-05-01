@@ -1,5 +1,7 @@
 <?php
 
+namespace NameSpaceBasePlugin;
+
 
 class ScriptsPublic
 {

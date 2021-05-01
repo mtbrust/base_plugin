@@ -1,9 +1,12 @@
 <?php
 
+
+namespace NameSpaceBasePlugin;
+
 /**
  * Classe pai para as conexões com o banco de dados.
  */
-class Bd extends wpdb
+class Bd
 {
 
 
